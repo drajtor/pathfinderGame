@@ -19,7 +19,7 @@ bool CompareNode::operator()(const Node* a, const Node* b) {
 
 std::vector<std::pair<int, int>> find_path(const std::vector<std::vector<int>>& grid, Node start, Node goal) {
     std::priority_queue<Node*, std::vector<Node*>, CompareNode> open_set;
-    std::vector<std::vector<bool>> closed_set(80, std::vector<bool>(80, false));
+    std::vector<std::vector<bool>> closed_set(grid.size(), std::vector<bool>(grid[0].size(), false));
     start.update_costs(goal);
     open_set.push(new Node(start.y, start.x));
     Node* current = nullptr;
@@ -38,7 +38,7 @@ std::vector<std::pair<int, int>> find_path(const std::vector<std::vector<int>>& 
             for (int dx = -1; dx <= 1; dx++) {
                 int ny = current->y + dy;
                 int nx = current->x + dx;
-                if (ny < 0 || nx < 0 || ny >= 80 || nx >= 80 || grid[ny][nx] == 1 || closed_set[ny][nx])
+                if (ny < 0 || nx < 0 || ny >= (int)grid.size() || nx >= (int)grid[0].size() || grid[ny][nx] == 1 || closed_set[ny][nx])
                     continue;
 
                 Node* neighbor = new Node(ny, nx, current);
@@ -56,20 +56,6 @@ std::vector<std::pair<int, int>> find_path(const std::vector<std::vector<int>>& 
 
     return path;
 }
-
-// void generate_maps(std::vector<std::vector<std::vector<int>>>& maps) {
-//     maps.resize(10, std::vector<std::vector<int>>(80, std::vector<int>(80, 0)));
-//     // Generowanie 10 map z rosnącą liczbą przeszkód.
-//     for (int i = 0; i < 10; i++) {
-//         for (int y = 0; y < 80; y++) {
-//             for (int x = 0; x < 80; x++) {
-//                 if (rand() % 100 < i * 5) { // Zwiększanie gęstości przeszkód
-//                     maps[i][y][x] = 1;
-//                 }
-//             }
-//         }
-//     }
-// }
 
 void display_map(std::vector<std::vector<int>>& grid, const std::vector<std::pair<int, int>>& path) {
     for (auto& p : path) {

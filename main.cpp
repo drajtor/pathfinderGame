@@ -4,14 +4,17 @@
 #include "map_generator.h"
 
 int main(int argc, char** argv) {
+    const int mapCount (4);
+    const int mapMaxIndex = mapCount - 1;
+
     if (argc < 2) {
-        std::cout << "Usage: " << argv[0] << " map_index (0-9)" << std::endl;
+        std::cout << "Usage: " << argv[0] << " map_index (0-" << mapMaxIndex << ")" << std::endl;
         return 1;
     }
 
     int map_index = std::atoi(argv[1]);
-    if (map_index < 0 || map_index > 9) {
-        std::cout << "Invalid map index. Please enter a value between 0 and 9." << std::endl;
+    if (map_index < 0 || mapCount > 9) {
+        std::cout << "Invalid map index. Please enter a value between 0 and " << mapMaxIndex << std::endl;
         return 1;
     }
 
