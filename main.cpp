@@ -4,7 +4,7 @@
 #include "map_generator.h"
 
 int main(int argc, char** argv) {
-    const int mapCount (4);
+    const int mapCount (5);
     const int mapMaxIndex = mapCount - 1;
 
     if (argc < 2) {
