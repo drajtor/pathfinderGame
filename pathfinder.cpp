@@ -1,23 +1,44 @@
-// pathfinding.cpp
-#include "pathfinding.h"
+// pathfinder.cpp
+#include "pathfinder.h"
 #include <iostream>
 #include <queue>
 #include <cmath>
 #include <iomanip>
 
-Node::Node(int y, int x, Node* p) : y(y), x(x), g_cost(0), h_cost(0), f_cost(0), parent(p) {}
+class Node {
+public:
+    int y, x;
+    int g_cost, h_cost, f_cost;
+    Node* parent;
 
-void Node::update_costs(const Node& goal) {
-    if (parent) g_cost = parent->g_cost + 1;
-    h_cost = std::abs(goal.x - x) + std::abs(goal.y - y);
-    f_cost = g_cost + h_cost;
-}
+
+    Node(int y, int x, Node* p = nullptr) : y(y), x(x), g_cost(0), h_cost(0), f_cost(0), parent(p) {
+
+    }
+
+    void update_costs(const Node& goal){
+        if (parent) g_cost = parent->g_cost + 1;
+        h_cost = std::abs(goal.x - x) + std::abs(goal.y - y);
+        f_cost = g_cost + h_cost;
+    }
+};
+
+class CompareNode {
+public:
+    bool operator()(const Node* a, const Node* b);
+};
+
 
 bool CompareNode::operator()(const Node* a, const Node* b) {
     return a->f_cost > b->f_cost;
 }
 
-std::vector<std::pair<int, int>> find_path(const std::vector<std::vector<int>>& grid, Node start, Node goal) {
+std::vector<std::pair<int, int>> Pathfinder::find_path(const std::vector<std::vector<int>>& grid, 
+                                                        std::pair<int,int> s, 
+                                                        std::pair<int,int> g) {
+    Node start(s.first, s.second), goal(g.first, g.second);
+
+    
     std::priority_queue<Node*, std::vector<Node*>, CompareNode> open_set;
     std::vector<std::vector<bool>> closed_set(grid.size(), std::vector<bool>(grid[0].size(), false));
     start.update_costs(goal);
