@@ -3,6 +3,9 @@
 #include <cstdlib>  // Dla std::atoi
 #include "pathfinder.h"
 #include "map_generator.h"
+#include "Imap_drawer.h"
+#include "map_text_drawer.h"
+#include <memory>
 
 int main(int argc, char** argv) {
     const int mapCount (5);
@@ -28,7 +31,10 @@ int main(int argc, char** argv) {
     Pathfinder pathfinder;
 
     std::vector<std::pair<int, int>> path = pathfinder.find_path(maps[map_index], start, goal);
-    display_map(maps[map_index], path);
+    
+    std::unique_ptr<IMapDrawer> mapDrawer = std::make_unique<MapTextDrawer>(MapTextDrawer());
+
+    mapDrawer->draw(maps[map_index], path);
 
     return 0;
 }

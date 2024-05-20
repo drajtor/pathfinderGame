@@ -12,5 +12,3 @@ class Pathfinder {
 
 };
 
-void display_map(std::vector<std::vector<int>>& grid, const std::vector<std::pair<int, int>>& path);
-

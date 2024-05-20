@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -Wall -g
 
-OBJ = main.o pathfinder.o map_generator.o maps_data.o
+OBJ = main.o pathfinder.o map_generator.o maps_data.o map_text_drawer.o
 EXEC = pathfinder
 
 all: $(EXEC)
